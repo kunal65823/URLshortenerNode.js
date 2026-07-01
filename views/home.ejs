@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+
+    <h1>URL Shortener</h1>
+
+    <form method="POST" action="/urls">
+        <label>Enter your original URL</label><br><br>
+
+        <input
+            type="text"
+            name="url"
+            placeholder="https://example.com"
+            required
+        >
+
+        <button type="submit">Generate Short URL</button>
+    </form>
+
+    <% if (typeof id !== "undefined") { %>
+        <h3>Your Short URL:</h3>
+        <a href="/<%= id %>">
+            http://localhost:8001/<%= id %>
+        </a>
+    <% } %>
+
+</body>
+</html>
