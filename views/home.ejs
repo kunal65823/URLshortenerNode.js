@@ -29,5 +29,41 @@
         </a>
     <% } %>
 
+    <br><br>
+
+    <% if (locals.urls && locals.urls.length > 0) { %>
+        <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Original URL</th>
+                    <th>Short URL</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% locals.urls.forEach((url, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+
+                        <td>
+                            <a href="<%= url.redirectURL %>" target="_blank">
+                                <%= url.redirectURL %>
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="/<%= url.shortID %>">
+                                http://localhost:8001/<%= url.shortID %>
+                            </a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No URLs found.</p>
+    <% } %>
+
 </body>
 </html>
