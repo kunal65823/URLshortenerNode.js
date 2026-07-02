@@ -38,6 +38,7 @@
                     <th>S.No</th>
                     <th>Original URL</th>
                     <th>Short URL</th>
+                    <th>Clicks</th>
                 </tr>
             </thead>
 
@@ -57,6 +58,7 @@
                                 http://localhost:8001/<%= url.shortID %>
                             </a>
                         </td>
+                        <td><%= url.visitHistory.length %></td>
                     </tr>
                 <% }) %>
             </tbody>
