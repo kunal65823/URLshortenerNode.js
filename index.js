@@ -1,6 +1,7 @@
 const express = require("express");
 const urlroutes = require("./routes/url");
 const staticroutes = require("./routes/statucroutes");
+const userroutes = require("./routes/user");
 const { connectmongoDB } = require("./connect");
 const URL = require("./models/url");
 const path = require('path');
@@ -45,6 +46,7 @@ app.get("/:shortID", async (req, res) => {
 });
 
 app.use("/urls", urlroutes);
+app.use("/user", userroutes);
 app.use("/",staticroutes);
 
 connectmongoDB("mongodb://localhost:27017/shortenurl")
