@@ -23,31 +23,33 @@ app.get("/test", async (req, res) => {
     });
 });
 
-app.get("/:shortID", async (req, res) => {
-  const shortID = req.params.shortID;
 
-  const entry = await URL.findOneAndUpdate(
-    { shortID },
-    {
-      $push: {
-        visitHistory: {
-          timestamp: Date.now(),
-        },
-      },
-    },
-    { new: true }
-  );
-
-  if (!entry) {
-    return res.status(404).send("Short URL not found");
-  }
-
-  res.redirect(entry.redirectURL);
-});
 
 app.use("/urls", urlroutes);
 app.use("/user", userroutes);
-app.use("/",staticroutes);
+app.use("/", staticroutes);
+
+// Keep this LAST
+app.get("/:shortID", async (req, res) => {
+    const shortID = req.params.shortID;
+
+    const entry = await URL.findOneAndUpdate(
+        { shortID },
+        {
+            $push: {
+                visitHistory: {
+                    timestamp: Date.now(),
+                },
+            },
+        }
+    );
+
+    if (!entry) {
+        return res.status(404).send("Short URL not found");
+    }
+
+    res.redirect(entry.redirectURL);
+});
 
 connectmongoDB("mongodb://localhost:27017/shortenurl")
   .then(() => console.log("MongoDB Connected"));
