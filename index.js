@@ -2,9 +2,11 @@ const express = require("express");
 const urlroutes = require("./routes/url");
 const staticroutes = require("./routes/statucroutes");
 const userroutes = require("./routes/user");
+const cookieParser = require("cookie-parser");
 const { connectmongoDB } = require("./connect");
 const URL = require("./models/url");
 const path = require('path');
+const {restrictLoggedInUseronly,checkAuth} = require("./midleware/auth");
 
 const app = express();
 
@@ -13,6 +15,7 @@ app.set("views", path.resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.get("/test", async (req, res) => {
     const allurls = await URL.find({});
@@ -25,9 +28,9 @@ app.get("/test", async (req, res) => {
 
 
 
-app.use("/urls", urlroutes);
+app.use("/urls", restrictLoggedInUseronly, urlroutes);
 app.use("/user", userroutes);
-app.use("/", staticroutes);
+app.use("/", checkAuth, staticroutes);
 
 // Keep this LAST
 app.get("/:shortID", async (req, res) => {

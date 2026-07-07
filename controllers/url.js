@@ -17,6 +17,7 @@ async function handleGenerationofshorturl(req, res) {
     shortID,
     redirectURL: body.url,
     visitHistory: [],
+    createdBy:req.user._id, // Assuming you have user authentication and req.user is set
 });
 
 const allUrls = await URL.find({});
